@@ -93,9 +93,9 @@ int main(void) {
     CNFlag = 0;
     
     InitCN();               //Initialize CN interrupt priority #7 
-    InitTimer1();	    //Initialize Timer 1 (1 second countdown) interrupt priority #5
-    InitTimer2();           //Initialize Timer 2 (button debounce) interrupt priority #6
-    InitUART2();	    //Initialize UART 2 interrupt priority #4
+    InitTimer1();           //Initialize Timer 1 (1 second countdown) interrupt priority #5
+    InitTimer2();           //Initialize Timer 2 (button de bounce) interrupt priority #6
+    InitUART2();            //Initialize UART 2 interrupt priority #4
     
     while(1)
     {
