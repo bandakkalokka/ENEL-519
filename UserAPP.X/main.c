@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <errno.h>
-#include <States.h>
+#include "States.h"
 
 //// CONFIGURATION BITS ////
 
@@ -62,7 +62,6 @@
 unsigned int temp;
 unsigned int i;
 
-
 // MACROS
 #define Nop() {__asm__ volatile ("nop");}
 #define ClrWdt() {__asm__ volatile ("clrwdt");}
@@ -102,7 +101,26 @@ int main(void) {
     
     while(1)
     {
-
+       switch (State){
+         case S_ZERO_DISPLAY:
+            ZeroDisplay();
+         break;
+         case S_WAIT_BUTTON_PRESS:
+            WaitForButtonPress();
+         break;
+         case S_INC_TIMER:
+            IncrementTimer();
+         break;
+         case S_COUNTDOWN:
+            Countdown();
+         break;
+         case S_ALARM:
+            Alarm();
+         break;
+         case S_RESET:
+            Reset();
+         break;
+       }
     }
     return 0;
 }
