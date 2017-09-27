@@ -91,6 +91,7 @@ int main(void) {
     
     INTCON1bits.NSTDIS = 0;     //Enable nested interrupts
     CNFlag = 0;
+    ButtonPressed = 0;
     
     InitCN();               //Initialize CN interrupt priority #7 
     InitTimer1();           //Initialize Timer 1 (1 second countdown) interrupt priority #5
@@ -109,7 +110,7 @@ int main(void) {
             WaitForButtonPress();
          break;
          case S_INC_TIMER:
-            IncrementTimer();
+            IncrementTimer(ButtonPressed);
          break;
          case S_COUNTDOWN:
             Countdown();

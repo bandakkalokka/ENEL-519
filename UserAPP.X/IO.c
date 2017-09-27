@@ -2,6 +2,7 @@
 #include "IO.h"
 #include "Timer2.h"
 #include "UART2.H"
+#include "States.h"
 
 volatile unsigned int CNFlag;
 
@@ -19,13 +20,15 @@ void InitCN(void){
 
 void PollCN (void){
     if(PORTBbits.RB4 && PORTAbits.RA4) {
-        EmitCN(BOTH);
+        State = S_COUNTDOWN;
     }
     else if(PORTBbits.RB4 && ~PORTAbits.RA4) {
-        EmitCN(PIN_RB4);
+        State = S_INC_TIMER;
+        ButtonPressed = 1;
     }
     else if(PORTAbits.RA4 && ~PORTBbits.RB4){
-         EmitCN(PIN_RA4);
+        State = S_INC_TIMER;
+        ButtonPressed = 2;
     }
 }
 

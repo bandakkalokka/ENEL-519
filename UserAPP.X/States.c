@@ -1,14 +1,25 @@
 #include "States.h"
 
 volatile unsigned int State; 
+volatile unsigned int ButtonPressed;
+unsigned int Mins;    // Minutes set by user
+unsigned int Secs;    // Seconds set by user
 
 void ZeroDisplay(void){
   // TODO -- Put code for displaying 00:00
 }
 void WaitForButtonPress(void){
-  // TODO -- Put code for waiting for button press
+    if (CNFlag)
+    {
+        delay_ms(80);
+        PollCN();
+    }
+    else
+    {
+        Idle();
+    }
 }
-void IncrementTimer(void){
+void IncrementTimer(unsigned int Button){
   // TODO -- Put code for incrementing minute and second holders
   // TODO -- Put code for updating UART with minute and second holders
 }
