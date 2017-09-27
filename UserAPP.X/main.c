@@ -12,11 +12,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <errno.h>
-#include "UART2.H"
-#include "Timer2.h"
-#include "IO.h"
-
-#include "ChangeClk.h"
 
 //// CONFIGURATION BITS ////
 
@@ -93,22 +88,18 @@ int main(void) {
      
     // Switch clock: 32 for 32kHz, 500 for 500 kHz, 8 for 8MHz 
     NewClk(32); //
-    TRISBbits.TRISB8 = 0;
-    LATBbits.LATB8 = 0;
     
     INTCON1bits.NSTDIS = 0;     //Enable nested interrupts
     CNFlag = 0;
     
-    InitCN();               //Initialize CN interrupt
-    InitTimer2();           //Initialize Timer 2
+    InitCN();               //Initialize CN interrupt priority #7 
+    InitTimer1();	    //Initialize Timer 1 (1 second countdown) interrupt priority #5
+    InitTimer2();           //Initialize Timer 2 (button debounce) interrupt priority #6
+    InitUART2();	    //Initialize UART 2 interrupt priority #4
     
     while(1)
     {
-        if(CNFlag == 1) {
-            CNFlag = 0;
-            delay_ms(80);
-            PollCN();
-        }
+
     }
     return 0;
 }
