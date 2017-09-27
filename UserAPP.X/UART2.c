@@ -83,8 +83,6 @@ void InitUART2(void)
 
 void XmitUART2(char CharNum, unsigned int repeatNo)
 {	
-	
-	InitUART2();	//Initialize UART2 module and turn it on
 	while(repeatNo!=0) 
 	{
 		while(U2STAbits.UTXBF==1)	//Just loop here till the FIFO buffers have room for one more entry
