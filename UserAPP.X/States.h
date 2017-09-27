@@ -15,7 +15,7 @@
  #include "IO.h"
  #include "Timer1.h"
  #include "Timer2.h"
- #include "UART2.h"
+ #include "UART2.H"
  #include "ChangeClk.h"
 
  // Define State Macros
@@ -28,8 +28,6 @@
 
  // Global variables
  extern volatile unsigned int State;   // Keeps track of current state
- extern volatile unsigned int Mins;    // Minutes set by user
- extern volatile unsigned int Secs;    // Seconds set by user
 
  // State functions
  void ZeroDisplay(void);

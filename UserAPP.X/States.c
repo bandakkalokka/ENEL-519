@@ -1,9 +1,12 @@
 #include "States.h"
 
 volatile unsigned int State; 
+unsigned int Mins;    // Minutes set by user
+unsigned int Secs;    // Seconds set by user
 
 void ZeroDisplay(void){
   // TODO -- Put code for displaying 00:00
+  DispDec(9);  
 }
 void WaitForButtonPress(void){
   // TODO -- Put code for waiting for button press

@@ -173,9 +173,9 @@ void DispHex32(unsigned long int DispData32)   // Displays 32 bit number in Hex 
 
 void DispDec(unsigned int DispData)
 {
-  //  XmitUART2(' ',1);  // Disp Gap
-  //  XmitUART2(DispData + 0x30 ,1);
-  //  return;
+    XmitUART2(' ',1);  // Disp Gap
+    XmitUART2(DispData + 0x30 ,1);
+    return;
 }
 
 
