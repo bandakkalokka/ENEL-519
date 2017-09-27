@@ -14,6 +14,7 @@ void InitTimer1(void) {
 void delay(unsigned int time) {
     //NewClk(32);
     T1CONbits.TON = 1;                  //Turn on timer 1
+    
 }
 
 //Timer1 Interrupt subroutine

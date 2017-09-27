@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <errno.h>
+#include <States.h>
 
 //// CONFIGURATION BITS ////
 
@@ -96,6 +97,8 @@ int main(void) {
     InitTimer1();           //Initialize Timer 1 (1 second countdown) interrupt priority #5
     InitTimer2();           //Initialize Timer 2 (button de bounce) interrupt priority #6
     InitUART2();            //Initialize UART 2 interrupt priority #4
+    
+    State = S_ZERO_DISPLAY;
     
     while(1)
     {
