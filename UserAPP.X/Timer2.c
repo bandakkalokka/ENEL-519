@@ -12,32 +12,19 @@ void InitTimer2(void) {
     IEC0bits.T2IE = 0b1;                //Enable the Timer Interrupt
 }
 
-
 void delay_ms(unsigned int time_ms) {
-    //NewClk(32);
     PR2 = (time_ms) * 16;
     T2CONbits.TON = 0b1;                //Turn on Timer
     Idle();
-    
-    return;
-}
 
-
-/* Low end for time_us is 30us */
-void delay_us(unsigned int time_us) {
-    NewClk(8);
-    PR2 = (time_us * 3);
-    T2CONbits.TON = 0b1;                //Turn on Timer
-    //Idle();
-    
     return;
 }
 
 //Timer2 Interrupt subroutine
 void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void)
 {
-    IFS0bits.T2IF = 0b0;                //Clear Flag status
-    T2CONbits.TON = 0b0;                //Turn off timer
+    IFS0bits.T2IF = 0;                //Clear Flag status
+    T2CONbits.TON = 0;                //Turn off timer
     TMR2 = 0;
-    //Nop();
+    Nop();
 }

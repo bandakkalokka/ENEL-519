@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Timer2.h
  * Author: bandakka
  *
@@ -12,20 +12,10 @@
 extern "C" {
 #endif
 
-
-
-
-#ifdef	__cplusplus
-}
-#endif
-
-#endif	/* TIMER2_H */
-
-
 void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void);
 
 void delay_ms(unsigned int time_ms);
 
-void delay_us(unsigned int time_us);
-
 void InitTimer2(void);
+
+#endif	/* TIMER2_H */
