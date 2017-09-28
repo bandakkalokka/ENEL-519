@@ -110,7 +110,7 @@ int main(void) {
             WaitForButtonPress();
          break;
          case S_INC_TIMER:
-            IncrementTimer(ButtonPressed);
+            IncrementTimer();
          break;
          case S_COUNTDOWN:
             Countdown();

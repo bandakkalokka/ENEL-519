@@ -13,15 +13,41 @@ void WaitForButtonPress(void){
     {
         delay_ms(80);
         PollCN();
+        CNFlag = 0;
     }
     else
     {
         Idle();
     }
 }
-void IncrementTimer(unsigned int Button){
-  // TODO -- Put code for incrementing minute and second holders
-  // TODO -- Put code for updating UART with minute and second holders
+void IncrementTimer(void){
+    // TODO -- Put code for updating UART with minute and second holders
+    if (ButtonPressed == 1)
+    {
+        delay_ms(500);
+        Mins += 1;   
+        delay_ms(80);
+        
+        if (!(PB1 && ~PB2))
+        {
+            ButtonPressed = 0;
+            State = S_WAIT_BUTTON_PRESS;
+        }
+    }
+    else if (ButtonPressed == 2)
+    {
+        delay_ms(500);
+        Secs += 1;     
+        delay_ms(80);
+        
+        if (!(~PB1 && PB2))
+        {
+            ButtonPressed = 0;
+            State = S_WAIT_BUTTON_PRESS;
+        }
+    }
+   
+    // Update UART here
 }
 void Countdown(void){
   // TODO -- Put code for counting down timer

@@ -25,6 +25,10 @@
  #define S_COUNTDOWN          3
  #define S_ALARM              4
  #define S_RESET              5
+ 
+ // Push button Macros
+ #define PB1                  PORTBbits.RB4  
+ #define PB2                  PORTAbits.RA4
 
  // Global variables
  extern volatile unsigned int State;   // Keeps track of current state
@@ -33,9 +37,8 @@
  // State functions
  void ZeroDisplay(void);
  void WaitForButtonPress(void);
- void IncrementTimer(unsigned int Button);
+ void IncrementTimer(void);
  void Countdown(void);
  void Alarm(void);
  void Reset(void);
-
  #endif

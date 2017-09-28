@@ -19,17 +19,11 @@ extern "C" {
 }
 #endif
 
-#define PIN_RB4     0x01                    //Flag for RB4 pressed
-#define PIN_RA4     0x02                    //Flag for RA4 pressed
-#define BOTH        0x03                    //Flag for Both pressed
-
 extern volatile unsigned int CNFlag;
 
 void __attribute__((interrupt, no_auto_psv)) _CNInterrupt(void);
 
 void InitCN(void);
-
-void EmitCN(unsigned char pin);
 
 void PollCN (void);
 
