@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Timer1.h
  * Author: bandakka
  *
@@ -14,7 +14,7 @@ extern "C" {
 
 void InitTimer1(void);
 
-void delay(unsigned int time);
+void delay_onesec(void);
 
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void);
 

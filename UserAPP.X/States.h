@@ -17,7 +17,7 @@
  #include "Timer2.h"
  #include "UART2.H"
  #include "ChangeClk.h"
-
+ #include <p24F16KA101.h>
  // Define State Macros
  #define S_ZERO_DISPLAY       0
  #define S_WAIT_BUTTON_PRESS  1
@@ -26,8 +26,13 @@
  #define S_ALARM              4
  #define S_RESET              5
 
+ // Push button Macros
+ #define PB1                  PORTBbits.RB4
+ #define PB2                  PORTAbits.RA4
+
  // Global variables
  extern volatile unsigned int State;   // Keeps track of current state
+ extern volatile unsigned int ButtonPressed;
 
  // State functions
  void ZeroDisplay(void);
@@ -36,5 +41,4 @@
  void Countdown(void);
  void Alarm(void);
  void Reset(void);
-
  #endif

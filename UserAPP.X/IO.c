@@ -2,6 +2,7 @@
 #include "IO.h"
 #include "Timer2.h"
 #include "UART2.H"
+#include "States.h"
 
 volatile unsigned int CNFlag;
 
@@ -18,20 +19,22 @@ void InitCN(void){
 }
 
 void PollCN (void){
-    if(PORTBbits.RB4 && PORTAbits.RA4) {
-        EmitCN(BOTH);
+    if(PB1 && PB2) {
+        State = S_COUNTDOWN;
     }
-    else if(PORTBbits.RB4 && ~PORTAbits.RA4) {
-        EmitCN(PIN_RB4);
+    else if(PB1 && ~PB2) {
+        State = S_INC_TIMER;
+        ButtonPressed = 1;
     }
-    else if(PORTAbits.RA4 && ~PORTBbits.RB4){
-         EmitCN(PIN_RA4);
+    else if(PB2 && ~PB1){
+        State = S_INC_TIMER;
+        ButtonPressed = 2;
     }
 }
 
 void __attribute__ ((interrupt, no_auto_psv)) _CNInterrupt(void){
     
-    if(PORTBbits.RB4 || PORTAbits.RA4) {
+    if(PB1 || PB2) {
         CNFlag = 1;
     }
     
@@ -39,19 +42,3 @@ void __attribute__ ((interrupt, no_auto_psv)) _CNInterrupt(void){
     Nop();
 }
 
-void EmitCN (unsigned char pin)
-{
-  if (pin == PIN_RB4)
-  {
-    DispString("RB4 Triggered");
-  }
-  if (pin == PIN_RA4)
-  {
-    DispString("RA4 Triggered");
-  }
-  if (pin == BOTH) {
-    DispString("Both Triggered");
-  }
-
-  return;
-}
