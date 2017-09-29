@@ -96,12 +96,14 @@ int main(void) {
     InitCN();               //Initialize CN interrupt priority #7 
     InitTimer1();           //Initialize Timer 1 (1 second countdown) interrupt priority #5
     InitTimer2();           //Initialize Timer 2 (button de bounce) interrupt priority #6
-    InitUART2();            //Initialize UART 2 interrupt priority #4
     
     State = S_ZERO_DISPLAY;
+    char state[3];
     
     while(1)
     {
+        sprintf(state, "%d\n", State);
+        DispString(state);
        switch (State){
          case S_ZERO_DISPLAY:
             ZeroDisplay();

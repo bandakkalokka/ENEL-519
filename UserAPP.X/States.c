@@ -8,7 +8,7 @@ unsigned int Sec;    // Seconds set by user
 void ZeroDisplay(void){
     Min = 0;
     Sec = 0;
-    char* zeroTime = "\r\n00 : 00\r";
+    char* zeroTime = "\r\n00:00\r";
     DispString(zeroTime);
     
     State = S_WAIT_BUTTON_PRESS;
@@ -29,14 +29,14 @@ void IncrementTimer(void){
     // TODO -- Put code for updating UART with minute and second holders
     if (ButtonPressed == 1)
     {
-        delay_ms(500);
+        delay_ms(100);
         if (Min == 59)
             Min = 0;
         else
             Min += 1;
         delay_ms(80);
 
-        if (!(PB1 && ~PB2))
+        if ((~PB1 || PB2))
         {
             ButtonPressed = 0;
             State = S_WAIT_BUTTON_PRESS;
@@ -44,22 +44,22 @@ void IncrementTimer(void){
     }
     else if (ButtonPressed == 2)
     {
-        delay_ms(500);
+        delay_ms(100);
         if (Sec == 59)
             Sec = 0;
         else
             Sec += 1;
         delay_ms(80);
 
-        if (!(~PB1 && PB2))
+        if (PB1 || ~PB2)
         {
             ButtonPressed = 0;
             State = S_WAIT_BUTTON_PRESS;
         }
     }
 
-    char inc_time[6];
-    sprintf(inc_time, "1.0%f : 1.0%f\r", Min, Sec);
+    char inc_time[7];
+    sprintf(inc_time, "%02d:%02d\r", Min, Sec);
     DispString(inc_time);
 }
 void Countdown(void){
@@ -86,8 +86,8 @@ void Countdown(void){
         Min--;
     }
     
-    char dow_time[6];
-    sprintf(dow_time, "1.0%f : 1.0%f\r", Min, Sec);
+    char dow_time[7];
+    sprintf(dow_time, "%02d:%02d\r", Min, Sec);
     DispString(dow_time);
 }
 

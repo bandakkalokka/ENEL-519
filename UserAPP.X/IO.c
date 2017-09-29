@@ -21,9 +21,9 @@ void InitCN(void){
 void PollCN (void){
     if(PB1 && PB2) {
         if(State == S_COUNTDOWN) {
-            State == S_RESET;
+            State = S_RESET;
         }
-        else {
+        else if(State ==  S_WAIT_BUTTON_PRESS){
             State = S_COUNTDOWN;
         }
     }

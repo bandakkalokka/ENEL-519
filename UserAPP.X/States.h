@@ -18,6 +18,7 @@
  #include "UART2.H"
  #include "ChangeClk.h"
  #include <p24F16KA101.h>
+ #include <stdio.h>
  // Define State Macros
  #define S_ZERO_DISPLAY       0
  #define S_WAIT_BUTTON_PRESS  1
