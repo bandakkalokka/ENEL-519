@@ -1,3 +1,6 @@
+./UserAPP.X/build/default/
+./UserAPP.X/dist/default/
+.DS_Store
+./UserAPP.X/nbproject/*
 /UserAPP.X/build/default/
 /UserAPP.X/dist/default/
-.DS_Store
