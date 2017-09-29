@@ -20,7 +20,12 @@ void InitCN(void){
 
 void PollCN (void){
     if(PB1 && PB2) {
-        State = S_COUNTDOWN;
+        if(State == S_COUNTDOWN) {
+            State == S_RESET;
+        }
+        else {
+            State = S_COUNTDOWN;
+        }
     }
     else if(PB1 && ~PB2) {
         State = S_INC_TIMER;

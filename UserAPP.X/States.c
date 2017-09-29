@@ -6,9 +6,9 @@ unsigned int Min;    // Minutes set by user
 unsigned int Sec;    // Seconds set by user
 
 void ZeroDisplay(void){
-    Mins = 0;
-    Secs = 0;
-    char* zeroTime = "\r\n00:00\r";
+    Min = 0;
+    Sec = 0;
+    char* zeroTime = "\r\n00 : 00\r";
     DispString(zeroTime);
     
     State = S_WAIT_BUTTON_PRESS;
@@ -58,37 +58,51 @@ void IncrementTimer(void){
         }
     }
 
-    // Update UART here
+    char inc_time[6];
+    sprintf(inc_time, "1.0%f : 1.0%f\r", Min, Sec);
+    DispString(inc_time);
 }
 void Countdown(void){
-  // TODO -- Put code for counting down timer
   // TODO -- Put code for updating UART with minute and second holders
+    
+    if(CNFlag) {
+        delay_ms(80);
+        PollCN(); 
+        CNFlag = 0;
+        return;
+    }
+    
     delay_onesec();
     
-    if(Mins <= 0 && Secs <= 0) {        // Clock reaches 00:00
+    if(Min <= 0 && Sec <= 0) {        // Clock reaches 00:00
         State = S_ALARM;
     }
-    else if(Secs <= 0 && Mins > 0) {    // Clock reaches XX:00
-        Secs = 59;
-        Mins--;
+    else if(Sec <= 0 && Min > 0) {    // Clock reaches XX:00
+        Sec = 59;
+        Min--;
     }
     else {
-        Secs--;
-        Mins--;
+        Sec--;
+        Min--;
     }
     
+    char dow_time[6];
+    sprintf(dow_time, "1.0%f : 1.0%f\r", Min, Sec);
+    DispString(dow_time);
 }
+
 void Alarm(void){
   T1CONbits.TON = 0;
   TMR1 = 0;
-  DispString("ALARM");
+  DispString("\r\nALARM\r\n");
   Min = 0; Sec = 0;
   State = S_ZERO_DISPLAY;
 }
+
 void Reset(void){
   T1CONbits.TON = 0;
   TMR1 = 0;
-  DispString("RESET");
+  DispString("\r\nRESET\r\n");
   Min = 0; Sec = 0;
   State = S_ZERO_DISPLAY;
 }
