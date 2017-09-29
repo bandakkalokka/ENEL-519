@@ -6,7 +6,10 @@ unsigned int Mins;    // Minutes set by user
 unsigned int Secs;    // Seconds set by user
 
 void ZeroDisplay(void){
-  // TODO -- Put code for displaying 00:00
+    char* zeroTime = "00:00\r";
+    DispString(zeroTime);
+    
+    State = S_WAIT_BUTTON_PRESS;
 }
 void WaitForButtonPress(void){
     if (CNFlag)

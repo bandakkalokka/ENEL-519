@@ -15,7 +15,7 @@
  #include "IO.h"
  #include "Timer1.h"
  #include "Timer2.h"
- #include "UART2.h"
+ #include "UART2.H"
  #include "ChangeClk.h"
  #include <p24F16KA101.h>
  // Define State Macros
