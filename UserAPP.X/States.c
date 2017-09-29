@@ -2,8 +2,8 @@
 
 volatile unsigned int State;
 volatile unsigned int ButtonPressed;
-unsigned int Mins;    // Minutes set by user
-unsigned int Secs;    // Seconds set by user
+unsigned int Min;    // Minutes set by user
+unsigned int Sec;    // Seconds set by user
 
 void ZeroDisplay(void){
     char* zeroTime = "00:00\r";
@@ -28,7 +28,10 @@ void IncrementTimer(void){
     if (ButtonPressed == 1)
     {
         delay_ms(500);
-        Mins += 1;
+        if (Min == 59)
+            Min = 0;
+        else
+            Min += 1;
         delay_ms(80);
 
         if (!(PB1 && ~PB2))
@@ -40,7 +43,10 @@ void IncrementTimer(void){
     else if (ButtonPressed == 2)
     {
         delay_ms(500);
-        Secs += 1;
+        if (Sec == 59)
+            Sec = 0;
+        else
+            Sec += 1;
         delay_ms(80);
 
         if (!(~PB1 && PB2))
@@ -60,13 +66,13 @@ void Alarm(void){
   T1CONbits.TON = 0;
   TMR1 = 0;
   DispString("ALARM");
-  Mins = 0; Secs = 0;
+  Min = 0; Sec = 0;
   State = S_ZERO_DISPLAY;
 }
 void Reset(void){
   T1CONbits.TON = 0;
   TMR1 = 0;
   DispString("RESET");
-  Mins = 0; Secs = 0;
+  Min = 0; Sec = 0;
   State = S_ZERO_DISPLAY;
 }
