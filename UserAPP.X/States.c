@@ -6,7 +6,9 @@ unsigned int Mins;    // Minutes set by user
 unsigned int Secs;    // Seconds set by user
 
 void ZeroDisplay(void){
-    char* zeroTime = "00:00\r";
+    Mins = 0;
+    Secs = 0;
+    char* zeroTime = "\r\n00:00\r";
     DispString(zeroTime);
     
     State = S_WAIT_BUTTON_PRESS;
@@ -55,6 +57,20 @@ void IncrementTimer(void){
 void Countdown(void){
   // TODO -- Put code for counting down timer
   // TODO -- Put code for updating UART with minute and second holders
+    delay_onesec();
+    
+    if(Mins <= 0 && Secs <= 0) {        // Clock reaches 00:00
+        State = S_ALARM;
+    }
+    else if(Secs <= 0 && Mins > 0) {    // Clock reaches XX:00
+        Secs = 59;
+        Mins--;
+    }
+    else {
+        Secs--;
+        Mins--;
+    }
+    
 }
 void Alarm(void){
   T1CONbits.TON = 0;
