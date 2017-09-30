@@ -16,7 +16,7 @@ void ZeroDisplay(void){
 void WaitForButtonPress(void){
     if (CNFlag)
     {
-        delay_ms(80);
+        delay_ms(100);
         PollCN();
         CNFlag = 0;
     }
@@ -27,43 +27,56 @@ void WaitForButtonPress(void){
 }
 void IncrementTimer(void){
     // TODO -- Put code for updating UART with minute and second holders
+    char inc_time[7];
+    
     if (ButtonPressed == 1)
     {
-        delay_ms(100);
-        if (Min == 59)
-            Min = 0;
-        else
-            Min += 1;
-        delay_ms(80);
-
-        if ((~PB1 || PB2))
-        {
-            ButtonPressed = 0;
-            State = S_WAIT_BUTTON_PRESS;
+        while(PB1 && ~PB2) {
+            delay_ms(80);
+            if (Min == 59)
+                Min = 0;
+            else
+                Min += 1;
+            delay_ms(80);
+            
+            sprintf(inc_time, "%02d:%02d\r", Min, Sec);
+            DispString(inc_time);
         }
+        
+        ButtonPressed = 0;
+        State = S_WAIT_BUTTON_PRESS;
+        
     }
     else if (ButtonPressed == 2)
     {
-        delay_ms(100);
-        if (Sec == 59)
-            Sec = 0;
-        else
-            Sec += 1;
-        delay_ms(80);
-
-        if (PB1 || ~PB2)
-        {
-            ButtonPressed = 0;
-            State = S_WAIT_BUTTON_PRESS;
+        while(PB2 && ~PB1) {
+            delay_ms(80);
+            if (Sec == 59)
+                Sec = 0;
+            else
+                Sec += 1;
+            delay_ms(80);
+            
+            sprintf(inc_time, "%02d:%02d\r", Min, Sec);
+            DispString(inc_time);
+            
         }
-    }
+        
+        ButtonPressed = 0;
+        State = S_WAIT_BUTTON_PRESS;
 
-    char inc_time[7];
-    sprintf(inc_time, "%02d:%02d\r", Min, Sec);
-    DispString(inc_time);
+    }
+    
+        //ButtonPressed = 0;
+        //State = S_WAIT_BUTTON_PRESS;
+
 }
 void Countdown(void){
   // TODO -- Put code for updating UART with minute and second holders
+    
+    char dow_time[7];
+    sprintf(dow_time, "%02d:%02d\r", Min, Sec);
+    DispString(dow_time);
     
     if(CNFlag) {
         delay_ms(80);
@@ -81,20 +94,16 @@ void Countdown(void){
         Sec = 59;
         Min--;
     }
-    else {
+    else{
         Sec--;
-        Min--;
     }
     
-    char dow_time[7];
-    sprintf(dow_time, "%02d:%02d\r", Min, Sec);
-    DispString(dow_time);
 }
 
 void Alarm(void){
   T1CONbits.TON = 0;
   TMR1 = 0;
-  DispString("\r\nALARM\r\n");
+  DispString("\r\nALARM\r");
   Min = 0; Sec = 0;
   State = S_ZERO_DISPLAY;
 }
@@ -102,7 +111,7 @@ void Alarm(void){
 void Reset(void){
   T1CONbits.TON = 0;
   TMR1 = 0;
-  DispString("\r\nRESET\r\n");
+  DispString("\r\nRESET\r");
   Min = 0; Sec = 0;
   State = S_ZERO_DISPLAY;
 }

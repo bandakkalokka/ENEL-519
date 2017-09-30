@@ -102,8 +102,8 @@ int main(void) {
     
     while(1)
     {
-        sprintf(state, "%d\n", State);
-        DispString(state);
+        //sprintf(state, "%d\n", State);
+        //DispString(state);
        switch (State){
          case S_ZERO_DISPLAY:
             ZeroDisplay();
@@ -124,6 +124,7 @@ int main(void) {
             Reset();
          break;
        }
+       
     }
     return 0;
 }

@@ -13,7 +13,7 @@ void InitTimer1(void) {
 
 void delay_onesec(void) {
     // TODO -- Figure out accurate PMR1 value for 1 second
-    PR1 = 1600;                        // Set PR1 for 1 second
+    PR1 = 9500;                        // Set PR1 for 1 second
     T1CONbits.TON = 1;                  //Turn on timer 1
     Idle();
 

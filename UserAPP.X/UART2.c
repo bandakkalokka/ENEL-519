@@ -63,11 +63,11 @@ void InitUART2(void)
 	U2STAbits.URXDA = 0;	//Bit0 *Read Only Bit*
     */
 	IFS1bits.U2TXIF = 0;	// Clear the Transmit Interrupt Flag
-    IPC7bits.U2TXIP = 4;    // UART2 TX interrupt has interrupt priority 3-4th highest priority
+    IPC7bits.U2TXIP = 3;    // UART2 TX interrupt has interrupt priority 3-4th highest priority
     
 	IEC1bits.U2TXIE = 1;	// Enable Transmit Interrupts
 	IFS1bits.U2RXIF = 0;	// Clear the Recieve Interrupt Flag
-	IPC7bits.U2RXIP = 5;    //UART2 Rx interrupt has 2nd highest priority
+	IPC7bits.U2RXIP = 4;    //UART2 Rx interrupt has 2nd highest priority
     IEC1bits.U2RXIE = 0;	// Disable Recieve Interrupts
 
 	U2MODEbits.UARTEN = 1;	// And turn the peripheral on
