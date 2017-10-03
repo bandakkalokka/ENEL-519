@@ -2,7 +2,6 @@
 
 volatile unsigned int State;
 volatile unsigned int ButtonPressed;
-volatile unsigned int ButtonIgnore;
 unsigned int Min;    // Minutes set by user
 unsigned int Sec;    // Seconds set by user
 
