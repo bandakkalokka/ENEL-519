@@ -2,6 +2,7 @@
 
 volatile unsigned int State;
 volatile unsigned int ButtonPressed;
+volatile unsigned int ButtonIgnore;
 unsigned int Min;    // Minutes set by user
 unsigned int Sec;    // Seconds set by user
 
@@ -16,13 +17,13 @@ void ZeroDisplay(void){
 void WaitForButtonPress(void){
     if (CNFlag)
     {
-        delay_ms(100);
+        delay_ms(80);
         PollCN();
         CNFlag = 0;
     }
     else
     {
-        Idle();
+        Sleep();
     }
 }
 void IncrementTimer(void){
@@ -31,7 +32,7 @@ void IncrementTimer(void){
     
     if (ButtonPressed == 1)
     {
-        while(PB1 && ~PB2) {
+        while(PB1 && !CNFlag) {
             delay_ms(80);
             if (Min == 59)
                 Min = 0;
@@ -44,12 +45,13 @@ void IncrementTimer(void){
         }
         
         ButtonPressed = 0;
+        CNFlag = 0;
         State = S_WAIT_BUTTON_PRESS;
         
     }
     else if (ButtonPressed == 2)
     {
-        while(PB2 && ~PB1) {
+        while(PB2 && !CNFlag) {
             delay_ms(80);
             if (Sec == 59)
                 Sec = 0;
@@ -63,13 +65,10 @@ void IncrementTimer(void){
         }
         
         ButtonPressed = 0;
+        CNFlag = 0;
         State = S_WAIT_BUTTON_PRESS;
 
     }
-    
-        //ButtonPressed = 0;
-        //State = S_WAIT_BUTTON_PRESS;
-
 }
 void Countdown(void){
   // TODO -- Put code for updating UART with minute and second holders
@@ -77,15 +76,16 @@ void Countdown(void){
     char dow_time[7];
     sprintf(dow_time, "%02d:%02d\r", Min, Sec);
     DispString(dow_time);
+
+    IEC1bits.CNIE = 0;
+    delay_onesec();
+    IEC1bits.CNIE = 1;
     
     if(CNFlag) {
         delay_ms(80);
         PollCN(); 
         CNFlag = 0;
-        return;
     }
-    
-    delay_onesec();
     
     if(Min <= 0 && Sec <= 0) {        // Clock reaches 00:00
         State = S_ALARM;
@@ -96,8 +96,7 @@ void Countdown(void){
     }
     else{
         Sec--;
-    }
-    
+    }      
 }
 
 void Alarm(void){

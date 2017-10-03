@@ -7,7 +7,7 @@
 
 
 #include "xc.h"
-//#include <p24fxxxx.h>
+#include <p24fxxxx.h>
 #include <p24F16KA101.h>
 #include <stdio.h>
 #include <math.h>
@@ -92,18 +92,17 @@ int main(void) {
     INTCON1bits.NSTDIS = 0;     //Enable nested interrupts
     CNFlag = 0;
     ButtonPressed = 0;
+    ButtonIgnore = 0;
     
     InitCN();               //Initialize CN interrupt priority #7 
     InitTimer1();           //Initialize Timer 1 (1 second countdown) interrupt priority #5
     InitTimer2();           //Initialize Timer 2 (button de bounce) interrupt priority #6
     
     State = S_ZERO_DISPLAY;
-    char state[3];
+    DispString("Starting Clock\n");
     
     while(1)
     {
-        //sprintf(state, "%d\n", State);
-        //DispString(state);
        switch (State){
          case S_ZERO_DISPLAY:
             ZeroDisplay();
@@ -123,6 +122,8 @@ int main(void) {
          case S_RESET:
             Reset();
          break;
+         default:
+            Idle();
        }
        
     }

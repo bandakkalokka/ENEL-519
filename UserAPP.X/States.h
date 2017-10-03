@@ -34,6 +34,7 @@
  // Global variables
  extern volatile unsigned int State;   // Keeps track of current state
  extern volatile unsigned int ButtonPressed;
+ extern volatile unsigned int ButtonIgnore;
 
  // State functions
  void ZeroDisplay(void);

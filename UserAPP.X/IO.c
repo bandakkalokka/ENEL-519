@@ -13,7 +13,7 @@ void InitCN(void){
     CNEN1bits.CN0IE = 1;            //Enable CN0
     CNPD1bits.CN0PDE = 1;           //Pin CN0 pull down enable
     CNPD1bits.CN1PDE = 1;           //Pin CN1 pull down enable
-    IPC4bits.CNIP = 7;              //Highest priority interrupt
+    IPC4bits.CNIP = 6;              //Highest priority interrupt
     IFS1bits.CNIF = 0;              //Clear interrupt
     IEC1bits.CNIE = 1;              //Enables change notification interrupt
 }
@@ -28,11 +28,11 @@ void PollCN (void){
             State = S_COUNTDOWN;
         }
     }
-    else if(PB1 && ~PB2) {
+    else if(PB1 && ~PB2 && State ==  S_WAIT_BUTTON_PRESS) {
         State = S_INC_TIMER;
         ButtonPressed = 1;
     }
-    else if(PB2 && ~PB1){
+    else if(PB2 && ~PB1 && State ==  S_WAIT_BUTTON_PRESS){
         State = S_INC_TIMER;
         ButtonPressed = 2;
     }
@@ -45,6 +45,6 @@ void __attribute__ ((interrupt, no_auto_psv)) _CNInterrupt(void){
     }
     
     IFS1bits.CNIF = 0;                  //Clear Interrupt
-    Nop();
+    //Nop();
 }
 
