@@ -31,7 +31,7 @@ void IncrementTimer(void){
     
     if (ButtonPressed == 1)
     {
-        while(PB1 && !CNFlag) {
+        if(PB1 && !CNFlag) {
             delay_ms(80);
             if (Min == 59)
                 Min = 0;
@@ -42,15 +42,15 @@ void IncrementTimer(void){
             sprintf(inc_time, "%02d:%02d\r", Min, Sec);
             DispString(inc_time);
         }
-        
-        ButtonPressed = 0;
-        CNFlag = 0;
-        State = S_WAIT_BUTTON_PRESS;
-        
+        else {
+            ButtonPressed = 0;
+            CNFlag = 0;
+            State = S_WAIT_BUTTON_PRESS;
+        }
     }
     else if (ButtonPressed == 2)
     {
-        while(PB2 && !CNFlag) {
+        if(PB2 && !CNFlag) {
             delay_ms(80);
             if (Sec == 59)
                 Sec = 0;
@@ -62,11 +62,11 @@ void IncrementTimer(void){
             DispString(inc_time);
             
         }
-        
-        ButtonPressed = 0;
-        CNFlag = 0;
-        State = S_WAIT_BUTTON_PRESS;
-
+        else {
+            ButtonPressed = 0;
+            CNFlag = 0;
+            State = S_WAIT_BUTTON_PRESS;
+        }
     }
 }
 void Countdown(void){
