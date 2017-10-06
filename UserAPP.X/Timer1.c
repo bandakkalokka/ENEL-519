@@ -2,6 +2,12 @@
 #include "Timer1.h"
 #include "ChangeClk.h"
 
+/*
+ * 
+ * void InitTimer1(void){}
+ * 
+ * Initializes Timer1 (countdown timer)
+ */
 
 void InitTimer1(void) {
     T1CONbits.TCKPS = 0b00;             //Set pre-scale to 1
@@ -11,8 +17,14 @@ void InitTimer1(void) {
     IEC0bits.T1IE = 0b1;                //Enable the Timer Interrupt
 }
 
+/*
+ * 
+ * void delay_onesec(void){}
+ * 
+ * Sets the PR1 value to match 1 second and turn on the timer
+ */
+
 void delay_onesec(void) {
-    // TODO -- Figure out accurate PMR1 value for 1 second
     PR1 = 9500;                        // Set PR1 for 1 second
     T1CONbits.TON = 1;                  //Turn on timer 1
     Idle();
@@ -20,7 +32,12 @@ void delay_onesec(void) {
     return;
 }
 
-//Timer1 Interrupt subroutine
+/*
+ * 
+ * void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt(void){}
+ * 
+ * subroutine for T1Interrupt
+ */
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void)
 {
     IFS0bits.T1IF = 0;                //Clear Flag status

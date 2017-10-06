@@ -7,7 +7,7 @@
 
 
 #include "xc.h"
-#include <p24fxxxx.h>
+//#include <p24fxxxx.h>
 #include <p24F16KA101.h>
 #include <stdio.h>
 #include <math.h>
@@ -80,10 +80,10 @@ unsigned int i;
 int main(void) {
     
     //Clock output on REFO
-    TRISBbits.TRISB15 = 0;  // Set RB15 as output for REFO
-    REFOCONbits.ROEN = 1; // Ref oscillator is enabled
-    REFOCONbits.ROSSLP = 0; // Ref oscillator is disabled in sleep
-    REFOCONbits.ROSEL = 0; // Output base clk showing clock switching
+    TRISBbits.TRISB15 = 0;      // Set RB15 as output for REFO
+    REFOCONbits.ROEN = 1;       // Ref oscillator is enabled
+    REFOCONbits.ROSSLP = 0;     // Ref oscillator is disabled in sleep
+    REFOCONbits.ROSEL = 0;      // Output base clk showing clock switching
     REFOCONbits.RODIV = 0b0000;
      
     // Switch clock: 32 for 32kHz, 500 for 500 kHz, 8 for 8MHz 
@@ -93,16 +93,16 @@ int main(void) {
     CNFlag = 0;
     ButtonPressed = 0;
     
-    InitCN();               //Initialize CN interrupt priority #7 
-    InitTimer1();           //Initialize Timer 1 (1 second countdown) interrupt priority #5
-    InitTimer2();           //Initialize Timer 2 (button de bounce) interrupt priority #6
+    InitCN();                   //Initialize CN interrupt priority #6
+    InitTimer1();               //Initialize Timer 1 (1 second countdown) interrupt priority #5
+    InitTimer2();               //Initialize Timer 2 (button de bounce) interrupt priority #7
     
-    State = S_ZERO_DISPLAY;
+    State = S_ZERO_DISPLAY;     //Initialize first state to S_ZERO_DISPLAY
     DispString("Starting Clock\n");
     
     while(1)
     {
-       switch (State){
+       switch (State){          //Call the respective function based on the current state
          case S_ZERO_DISPLAY:
             ZeroDisplay();
          break;
@@ -122,9 +122,8 @@ int main(void) {
             Reset();
          break;
          default:
-            Idle();
+            Sleep();
        }
-       
     }
     return 0;
 }
